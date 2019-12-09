@@ -1,41 +1,40 @@
-<?php include('server.php') ?>
+<?php
+session_start();
+include('functions.php');
+$user_name =mysqli_real_escape_string($db,$_POST['username']);
+$_SESSION['username'] = $username;
+
+$password = mysqli_real_escape_string($db,$_POST['password']);
+$_SESSION['password'] = $password;
+echo "$username";
+?>
 <!DOCTYPE html>
 <html>
 <head>
-<!-- Add icon library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <title>Registration and login system PHP and MySQL</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+	<title>Registration system PHP and MySQL</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script  src="js/index.js"></script>
 </head>
-<body class="bg-img">
+<body>
+	<form method="post" action="login.php">
+<h2><center>Login</center></h2>
+		<?php echo display_error(); ?>
+		 <div class="input-group">
+			<label>Username</label>
+			<input type="text" name="username" required autocomplete="off" >
+		</div>
 
-  <div class="header">
-  	<h2>Login</h2>
-  </div>
-  <div>
-  <form method="post" action="login.php">
-  	<?php include('errors.php'); ?>
-  	<div class="input-group" >
-		<label>Username</label>
-	</div>
-	<div>
-		<input type="text" name="username" placeholder="User Name" style="width:93%;" pattern="[a-zA-Z0-9]+" required>
-		<span class="errors" style="width:5%;">* </span>
-	</div>
-  	<div class="input-group">
-		  <label>Password</label>
-	</div>
-	<div>
-  		<input type="password" name="password" required placeholder="Password" style="width:93%;">
-		  <span class="errors" style="width:5%;">*</span>
-  	</div>
-  	<div class="input-group">
-  		<button type="submit" class="btn" name="login_user">Login</button>
-  	</div>
-	 <P>
-	  Not yet a member? <a href="registration.php">Sign up</a>
-	  </p>
-  </form>
-</div>
+		<div class="input-group">
+			<label>Password</label>
+			<input type="password" name="password" required autocomplete="off">
+		</div>
+		 <div class="input-group">
+			<button type="submit" class="btn" name="login_btn">Login</button>
+		</div>
+		<p>
+			Not yet a member? <a href="register.php">Sign up</a>
+		</p>
+	</form>
 </body>
 </html>

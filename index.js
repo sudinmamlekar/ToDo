@@ -1,4 +1,4 @@
-$('form').find('input').on('keyup blur focus', function (e) {
+$('.form').find('input').on('keyup blur focus', function (e) {
   
   var $this = $(this),
       label = $this.prev('label');
@@ -41,3 +41,13 @@ $('.tab a').on('click', function (e) {
   $(target).fadeIn(600);
   
 });
+
+/* Set the width of the side navigation to 250px */
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+} 
