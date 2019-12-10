@@ -1,33 +1,13 @@
-<?php 
-session_start();
-include('functions.php');
-if (!isLoggedIn()) {
-	$_SESSION['msg'] = "You must log in first";
-	header('location: login.php');
-}
-?>
-<!DOCTYPE html>
 <?php
-
-$username = $_SESSION['username'];  
-$password = $_SESSION['password'];
-$password = md5($password);
-$query = "select id from users where username='$username' and password='$password'";
-$result = $db->query($query);
-$tuser_id="";
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $tuser_id = $row['id'] ;
-        $_SESSION['id'] = $tuser_id;   
-      }
-    }
-
+session_start();
+include'functions.php';
+$tuser_id = $_SESSION['id'];
 
 $page = (isset($_GET['page']) ? (int)$_GET['page']:1);
 $perPage = (isset($_GET['per-page']) && (int)($_GET['per-page']) <= 50 ? (int)$_GET['per-page'] : 5);
 $start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
-$sql="select * from tasks where userid='$tuser_id' limit ".$start.",".$perPage."";
-$total = $db->query("select * from tasks")->num_rows;
+$sql="select * from users EXCEPT id='$tuser_id' limit ".$start.",".$perPage."";
+$total = $db->query("select * from users")->num_rows;
 $pages =ceil($total / $perPage);
 $rows=$db->query($sql);
 ?>
@@ -129,7 +109,7 @@ function closeNav() {
 <body>
 
 	<div class="navbar">
-  <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a> 
+  <a class="active" href="index.php"><i class="fa fa-fw fa-home"></i> Home</a> 
   <a href="#"><i class="fa fa-fw fa-search"></i> Search</a> 
   <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
    <div class="topnav-right">
@@ -145,61 +125,19 @@ function closeNav() {
   <a href="#">Deleted Task</a>
 </div>
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
-	<div class="content">
-		<!-- notification message -->
-		<?php if (isset($_SESSION['success'])) : ?>
-			<div class="error success" >
-				<h3>
-					<?php 
-						echo $_SESSION['success']; 
-						unset($_SESSION['success']);
-					?>
-				</h3>
-			</div>
-		<?php endif ?>
-				
-			</div>
-		</div>
-	</div>
- <div class="container">
-  <center><h1><b><u>Todo List</u></b></h1></center> 
+	 <div class="container">
+  <center><h1><b><u>Share Task</u></b></h1></center> 
   <div class="row" style="margin-top:70px;">
-  
   <div class="col-md-10 col-md-offset-1">
  
   <table class="table">
-  <button type="button" data-target="#myModal"  data-toggle="modal" class="btn btn-success">Add task</button>
-  <button type="button"  class="btn btn-default pull-right" onclick="print()">Print</button>
-  <hr><br>
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add task</h4>
-      </div>
-      <div class="modal-body">
-        <form method="post" action="add.php">
-        <div class="form-group">
-        <label>Task Name</label>
-        <input type="text" required name="Task" class="form-control">
-      </div>
-      <input type="submit" name="send" value="send" class="btn btn-success">
-      </form>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
+  <br>
 
-  </div>
-</div>
 <table class="table table-hover">
   <thead>
     <tr>
       <th>Id</th>
-      <th>Task</th>
+      <th>User Name</th>
     
     </tr>
   </thead>
@@ -207,11 +145,9 @@ function closeNav() {
     <tr> 
     <?php while($row = $rows->fetch_assoc()): ?>
 
-      <th><?php echo $row['Id'] ?></th>
-      <td class="col-md-10"><?php echo $row['Task'] ?></td>
+      <th><?php echo $row['id'] ?></th>
+      <td class="col-md-10"><?php echo $row['username'] ?></td>
       <td><a href="share.php?Id=<?php echo $row['Id'];?>" class="btn btn-primary">Share</a></td>
-      <td><a href="update.php?Id=<?php echo $row['Id'];?>"  class="btn btn-success">Edit</a></td>
-      <td><a href="delete.php?Id=<?php echo $row['Id'];?>"  class="btn btn-danger">Delete</a></td>
    </tr>
 <?php endwhile; ?>
 
