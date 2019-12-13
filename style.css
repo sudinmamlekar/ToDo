@@ -1,7 +1,7 @@
 * { margin: 0px; padding: 0px; }
 body {
 	font-size: 120%;
-	background: #F8F8FF;
+	background:green;
 }
 .header {
 	max-width: 600px;
@@ -14,21 +14,6 @@ body {
 	border-radius: 10px 10px 0px 0px;
 	padding: 20px;
 }
-
-form,
-.form {
-  padding: 40px;
-  max-width: 600px;
-  margin: 40px auto;
-  border-radius: 4px;
-  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
-  transition: .5s ease;
-}
-
-form,
-.formhover {
-	box-shadow: 0px 0px 40px 16px rgba(18,18,18,1.00);
-	}
 
 .input-group {
 	margin: 10px 0px 10px 0px;
@@ -94,11 +79,6 @@ form,
 	content: "";
 	display: block;
 	clear: both;
-}
-body {
-  background:url(images/3.jpg);
-  font-family: 'Titillium Web', sans-serif;
-  background-size:cover;
 }
 input {
   font-size: 22px;

@@ -9,11 +9,8 @@ $query = "select id from users where username='$username' and password='$passwor
 $result = $db->query($query);
 $tuser_id="";
 if ($result->num_rows > 0) {
-    // output data of each row
     while($row = $result->fetch_assoc()) {
-        //echo  $row['id'] ;
         $tuser_id = $row['id'] ;
-        //echo "$tuser_id";
        
     }
 } else {

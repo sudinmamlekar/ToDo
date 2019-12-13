@@ -5,8 +5,8 @@ $tuser_id = $_SESSION['id'];
 $page = (isset($_GET['page']) ? (int)$_GET['page']:1);
 $perPage = (isset($_GET['per-page']) && (int)($_GET['per-page']) <= 50 ? (int)$_GET['per-page'] : 5);
 $start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
-$sql="select * from users where not id='$tuser_id' limit ".$start.",".$perPage."";
-$total = $db->query("select * from users")->num_rows;
+$sql="select * from tasks inner join shared on tasks.Id=shared.taskid where shared_with_id='$tuser_id' limit ".$start.",".$perPage."";
+$total = $db->query("select * from shared")->num_rows;
 $pages =ceil($total / $perPage);
 $rows=$db->query($sql);
 ?>
@@ -135,7 +135,7 @@ function closeNav() {
 </div>
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
 	 <div class="container">
-  <center><h1><b><u>Share Task</u></b></h1></center> 
+  <center><h1><b><u>Shared Task</u></b></h1></center> 
   <div class="row" style="margin-top:70px;">
   <div class="col-md-10 col-md-offset-1">
  
@@ -146,22 +146,20 @@ function closeNav() {
   <thead>
     <tr>
       <th>Id</th>
-      <th>User Name</th>
+      <th>Task</th>
     </tr>
   </thead>
   <tbody>
     <tr> 
     <?php while($row = $rows->fetch_assoc()): ?>
-
-      <th><?php echo $row['id'] ?></th>
-      <td class="col-md-10"><?php echo $row['username'] ?><form method="post" ><center><input type="checkbox" name="check[]" value="<?php echo $row['id']; ?>" class="check"></center>  </td>
-     
+      <th><?php echo $row['userid'] ?></th>
+      <td class="col-md-10"><?php echo $row['Task'] ?></td>
+     <!-- <td class="col-md-10"><?php// echo $row['username'] ?><form method="post" ><center><input type="checkbox" name="check[]" value="<?php //echo $row['id']; ?>" class="check"></center>  </td>-->
    </tr>
 <?php endwhile; ?>
-
   </tbody>
 </table>
-<input type="submit" name="submit"  value="share">
+<!--<input type="submit" name="submit"  value="share">-->
 </form>
 </div>
 </div>
@@ -172,4 +170,3 @@ function closeNav() {
  <?php for($i = 1 ; $i <= $pages ;$i++):?>
  <li><a href="?page=<?php echo $i;?>&per-page=<?php echo $perPage;?>"><?php echo $i;?></a></li>
 <?php endfor; ?>  
-

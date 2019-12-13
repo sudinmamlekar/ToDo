@@ -1,13 +1,5 @@
 <?php
-session_start();
-include('functions.php');
-$user_name =mysqli_real_escape_string($db,$_POST['username']);
-$_SESSION['username'] = $username;
-
-$password = mysqli_real_escape_string($db,$_POST['password']);
-$_SESSION['password'] = $password;
-echo "$username";
-?>
+include('functions.php') ?>
 <!DOCTYPE html>
 <html>
 <head>

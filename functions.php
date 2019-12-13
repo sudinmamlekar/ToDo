@@ -197,3 +197,39 @@ function isAdmin()
 		return false;
 	}
 }
+
+
+if (isset($_POST['submit'])) {
+	share();
+}
+
+
+function share(){
+global $db;
+$id = (int)$_GET['Id']; //fetch taskname_id
+//$_SESSION['Id'] = $id;
+$sql = "select id, username from users";
+
+$result = mysqli_query($db,$sql);
+if (isset($_POST['submit'])) {
+if (!empty($_POST['check'])) {
+
+foreach ($_POST['check'] as $check) {
+//echo '<p>'.$check.'<p>';
+$insert = "insert into shared (taskid,shared_with_id) values('$id','$check')";
+
+//$s_insert = $db->query($insert);
+$s_insert = mysqli_query($db, $insert);
+if($s_insert){
+header('location:received.php');
+}
+else{
+echo "mistake";
+}
+}
+}
+else{
+echo "<br />". "you have not selected any option";
+}
+}
+}
